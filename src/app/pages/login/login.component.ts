@@ -3,6 +3,7 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/mat
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
     MatInput,
     MatCard,
     ReactiveFormsModule,
-    MatCardHeader
+    MatCardHeader,
+    MatButton
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -30,6 +32,11 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
     })
+  }
+
+  protected login() {
+    // TODO Giulio Galletti 18/10/2024: Inserire API Login
+    console.log("Login")
   }
 
 }
