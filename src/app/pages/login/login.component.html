@@ -1,14 +1,19 @@
-<mat-card id="login-card" style="text-align: center; width: 40%">
-  <mat-card-title>
-    Entra nel sistema
-  </mat-card-title>
+<div class="login-container" [formGroup]="loginForm">
+  <mat-card id="login-card" class="login-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>
+        Entra nel sistema
+      </mat-card-title>
+    </mat-card-header>
 
-  <mat-form-field>
-    <input matInput placeholder="Username">
-  </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput formControlName="username" placeholder="Username">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput type="password" placeholder="Password">
-  </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput formControlName="password" type="password" placeholder="Password">
+    </mat-form-field>
 
-</mat-card>
+  </mat-card>
+</div>
+
