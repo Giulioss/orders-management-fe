@@ -4,6 +4,7 @@ import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
+import {LoginClient} from '../../common/http-client/login.client';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ import {MatButton} from '@angular/material/button';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup([]);
 
-  constructor(private readonly fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder,
+              private readonly loginClient: LoginClient) {
   }
 
   ngOnInit(): void {
@@ -35,8 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   protected login() {
-    // TODO Giulio Galletti 18/10/2024: Inserire API Login
-    console.log("Login")
+    this.loginClient.login();
   }
 
 }
