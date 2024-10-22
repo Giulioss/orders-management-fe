@@ -37,7 +37,13 @@ export class LoginComponent implements OnInit {
   }
 
   protected login() {
-    this.loginClient.login();
+    this.loginClient.login({
+      username: this.loginForm.get('username')?.value,
+      password: this.loginForm.get('password')?.value
+    });
   }
 
+  protected registerNewAdmin() {
+    this.loginClient.registerNewAdmin();
+  }
 }
