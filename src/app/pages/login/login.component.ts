@@ -5,6 +5,7 @@ import {MatInput} from '@angular/material/input';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {AuthClient} from '../../common/clients/http-clients/auth.client';
+import {AuthRequest} from '../../common/clients/requests/auth.request';
 
 @Component({
   selector: 'app-login',
@@ -37,13 +38,10 @@ export class LoginComponent implements OnInit {
   }
 
   protected login() {
-    this.loginClient.login({
+    const authRequest: AuthRequest = {
       username: this.loginForm.get('username')?.value,
       password: this.loginForm.get('password')?.value
-    });
-  }
-
-  protected registerNewAdmin() {
-    this.loginClient.registerNewAdmin();
+    }
+    this.loginClient.login(authRequest);
   }
 }
