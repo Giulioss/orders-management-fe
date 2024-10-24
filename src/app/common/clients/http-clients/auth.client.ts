@@ -2,6 +2,8 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {TokenService} from '../../services/token.service';
 import {Observable} from 'rxjs';
+import {AuthRequest} from '../requests/auth.request';
+import {AuthResponse} from '../responses/auth.response';
 
 
 @Injectable({
@@ -12,12 +14,9 @@ export class AuthClient {
   constructor(private readonly http: HttpClient,
               private readonly tokenService: TokenService) {}
 
-  login(request: any) {
-    return this.http.post<void>("/api/auth/login", {
-      username: request.username,
-      password: request.password
-    }).subscribe({
-      next: (value: any) => this.tokenService.token = value.token,
+  login(request: AuthRequest) {
+    return this.http.post<AuthResponse>("/api/auth/login", request).subscribe({
+      next: (value: AuthResponse) => this.tokenService.token = value.token,
       error: err => console.error(err)
     })
   }
