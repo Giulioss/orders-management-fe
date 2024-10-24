@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {inject, Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {TOKEN_JWT_LS_KEY} from '../constants/jwt.constants';
+import {AuthClient} from '../clients/http-clients/auth.client';
 
 
 @Injectable({
@@ -12,7 +12,7 @@ import {TOKEN_JWT_LS_KEY} from '../constants/jwt.constants';
     Veloce riassunto: mettere il token come cookie e a backend mettere un controllo (HttpOnly flag)*/
 export class TokenService {
 
-  constructor(private readonly http: HttpClient) {}
+  constructor() {}
 
   set token(token: string) {
     localStorage.setItem(TOKEN_JWT_LS_KEY, token);
@@ -23,6 +23,7 @@ export class TokenService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.http.get<boolean>("http://localhost:8080/auth/validate");
+    const authClient = inject(AuthClient);
+    return authClient.validateToken();
   }
 }

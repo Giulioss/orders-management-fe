@@ -4,7 +4,7 @@ import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {LoginClient} from '../../common/http-client/login.client';
+import {AuthClient} from '../../common/clients/http-clients/auth.client';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup([]);
 
   constructor(private readonly fb: FormBuilder,
-              private readonly loginClient: LoginClient) {
+              private readonly loginClient: AuthClient) {
   }
 
   ngOnInit(): void {

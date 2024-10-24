@@ -1,12 +1,13 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {TokenService} from '../services/token.service';
+import {TokenService} from '../../services/token.service';
+import {Observable} from 'rxjs';
 
 
 @Injectable({
   providedIn: "root",
 })
-export class LoginClient {
+export class AuthClient {
 
   constructor(private readonly http: HttpClient,
               private readonly tokenService: TokenService) {}
@@ -25,9 +26,10 @@ export class LoginClient {
     return this.http.post("/api/auth/register", {
       username: "giulio2",
       password: "password2"
-    }).subscribe({
-      next: () => console.log("ciao"),
-      error: err => console.error(err)
-    })
+    });
+  }
+
+  validateToken(): Observable<boolean> {
+    return this.http.get<boolean>("/api/auth/validate");
   }
 }
