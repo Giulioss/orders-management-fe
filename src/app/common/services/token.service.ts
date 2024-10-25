@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {TOKEN_JWT_LS_KEY} from '../constants/jwt.constants';
 import {AuthClient} from '../clients/http-clients/auth.client';
 
@@ -23,6 +23,10 @@ export class TokenService {
   }
 
   isAuthenticated(): Observable<boolean> {
+    if (!this.token) {
+      return of(false);
+    }
+
     const authClient = inject(AuthClient);
     return authClient.validateToken();
   }
