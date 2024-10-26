@@ -11,6 +11,6 @@ export class OrderClient {
   constructor(private readonly http: HttpClient) {}
 
   getTableOrders(request: OrderFilterRequest) {
-    return this.http.post<OrderResponse>("/api/order/find", request);
+    return this.http.post<OrderResponse[]>("/api/order/find", request);
   }
 }
