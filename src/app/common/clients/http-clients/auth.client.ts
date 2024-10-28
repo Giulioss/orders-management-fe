@@ -4,6 +4,7 @@ import {TokenService} from '../../services/token.service';
 import {Observable} from 'rxjs';
 import {AuthRequest} from '../requests/auth.request';
 import {AuthResponse} from '../responses/auth.response';
+import {Router} from '@angular/router';
 
 
 @Injectable({
@@ -12,11 +13,15 @@ import {AuthResponse} from '../responses/auth.response';
 export class AuthClient {
 
   constructor(private readonly http: HttpClient,
+              private readonly router: Router,
               private readonly tokenService: TokenService) {}
 
   login(request: AuthRequest) {
     return this.http.post<AuthResponse>("/api/auth/login", request).subscribe({
-      next: (value: AuthResponse) => this.tokenService.token = value.token,
+      next: (value: AuthResponse) => {
+        this.tokenService.token = value.token
+        this.router.navigate(["/home"])
+      },
       error: err => console.error(err)
     })
   }
