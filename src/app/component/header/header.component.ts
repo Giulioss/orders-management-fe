@@ -20,6 +20,9 @@ export class HeaderComponent {
   isAuthenticated = false;
 
   // TODO Giulio Galletti 25/10/2024: Nicco, trasformalo in un signal che ti piacciono tanto
+  /* TODO Giulio Galletti 01/11/2024: AGGIORNAMENTO: se apri la console vedrai due chiamate,
+      sarò contento quando ne vedrò sempre solo una per pagina, anche con più componenti che richiedono quella informazione
+  */
   constructor(protected readonly tokenService: TokenService) {
     this.tokenService.isAuthenticated().subscribe({
       next: (isValid) => this.isAuthenticated = isValid,
