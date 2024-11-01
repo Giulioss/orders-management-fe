@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {OrderClient} from '../../common/clients/http-clients/order.client';
-import {OrderFilterRequest} from '../../common/clients/requests/order-filter.request';
 import {
   MatCell,
   MatCellDef,
@@ -12,6 +11,7 @@ import {
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, MatSortHeader, MatSortModule} from '@angular/material/sort';
+import {OrderResponse} from '../../common/clients/responses/order.response';
 
 @Component({
   selector: 'app-orders-table',
@@ -38,26 +38,40 @@ import {MatSort, MatSortHeader, MatSortModule} from '@angular/material/sort';
 export class OrdersTableComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['id', 'note', 'orderStatus'];
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<OrderResponse>();
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
+    this.sort.active = "id"
+    this.sort.direction = "desc"
+
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.getTableOrders()
+
+    this.paginator.page.subscribe(() => {
+      this.getTableOrders();
+    });
+
+    this.sort.sortChange.subscribe(() => {
+      this.getTableOrders();
+    });
   }
 
-  constructor(private readonly orderClient: OrderClient) {
-    this.getTableOrders();
-  }
+  constructor(private readonly orderClient: OrderClient) {}
 
-  getTableOrders(page: number = 0, pageSize: number = 10) {
-    const request: OrderFilterRequest = {
-      page: page,
-      pageSize: pageSize
-    }
+  getTableOrders() {
+    this.orderClient.getTableOrders(this.paginator.pageIndex, this.paginator.pageSize, this.sort.active, this.sort.direction).subscribe({
+      next: (orderList) => {
+        this.dataSource = new MatTableDataSource<OrderResponse>(orderList.orderResponseList);
 
-    this.orderClient.getTableOrders(request).subscribe({
-      next: (orderList) => this.dataSource = new MatTableDataSource(orderList),
+        this.paginator.length = orderList.totalElement;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
       error: (err) => console.error(err)
     });
   }
