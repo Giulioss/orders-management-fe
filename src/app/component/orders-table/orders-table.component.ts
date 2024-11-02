@@ -69,8 +69,6 @@ export class OrdersTableComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource<OrderResponse>(orderList.orderResponseList);
 
         this.paginator.length = orderList.totalElement;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       },
       error: (err) => console.error(err)
     });
