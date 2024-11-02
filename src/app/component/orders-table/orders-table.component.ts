@@ -50,7 +50,7 @@ export class OrdersTableComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.getTableOrders()
+    this.getTableOrders();
 
     this.paginator.page.subscribe(() => {
       this.getTableOrders();
@@ -65,10 +65,10 @@ export class OrdersTableComponent implements AfterViewInit {
 
   getTableOrders() {
     this.orderClient.getTableOrders(this.paginator.pageIndex, this.paginator.pageSize, this.sort.active, this.sort.direction).subscribe({
-      next: (orderList) => {
-        this.dataSource = new MatTableDataSource<OrderResponse>(orderList.orderResponseList);
+      next: (tableRes) => {
+        this.dataSource = new MatTableDataSource<OrderResponse>(tableRes.orderResponseList);
 
-        this.paginator.length = orderList.totalElement;
+        this.paginator.length = tableRes.totalElements;
       },
       error: (err) => console.error(err)
     });
