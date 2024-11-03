@@ -5,6 +5,7 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {jwtRequestInterceptor} from './common/interceptor/jwt.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {errorInterceptor} from './common/interceptor/error.interceptor';
+import {spinnerInterceptor} from './common/interceptor/spinner.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,7 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(
-      withInterceptors([jwtRequestInterceptor, errorInterceptor])
+      withInterceptors([spinnerInterceptor, jwtRequestInterceptor, errorInterceptor])
     ),
   ]
 };

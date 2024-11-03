@@ -1,4 +1,14 @@
 <header>
     <app-header></app-header>
 </header>
+<body>
 <router-outlet />
+</body>
+
+@if(spinnerService.loadingSignal()) {
+
+  <div class="spinner-container">
+    <mat-spinner />
+  </div>
+
+}
